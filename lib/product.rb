@@ -4,7 +4,7 @@ class Product
         @category = category
         @name = name
         @unit_price = unit_price.to_f
-        @quantity = quantity.to_f
+        @quantity = quantity.to_i
         @hoarded = false 
     end
 
