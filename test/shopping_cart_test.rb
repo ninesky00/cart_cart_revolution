@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require './lib/product'
 require './lib/shopping_cart'
+require 'pry'
 
 class ShoppingCartTest < Minitest::Test
     def setup
@@ -52,6 +53,31 @@ class ShoppingCartTest < Minitest::Test
         @cart.add_product(@product4)
         expected = [@product1, @product3]
         assert_equal expected, @cart.products_by_category(:paper)
+    end
+
+    def test_can_calculate_percentage_occupied
+        @cart.add_product(@product1)
+        @cart.add_product(@product2)
+        @cart.add_product(@product3)
+        assert_equal 43.33, @cart.percentage_occupied
+    end
+
+    def test_can_sort_products_by_quantity
+        @cart.add_product(@product1)
+        @cart.add_product(@product2)
+        @cart.add_product(@product3)
+        @cart.add_product(@product4)
+        expected = [@product4, @product1, @product2, @product3]
+        assert_equal expected, @cart.sorted_products_by_quantity
+    end
+
+    def test_can_view_product_breakdown
+        @cart.add_product(@product1)
+        @cart.add_product(@product2)
+        @cart.add_product(@product3)
+        @cart.add_product(@product4)
+        expected = {:meat=>[@product2], :paper=>[@product1, @product3], :produce=>[@product4]}
+        assert_equal expected, @cart.product_breakdown
     end
 end
 
